@@ -24,33 +24,22 @@ export class Users {
     async create(u: User): Promise<User[]>{
         try{
             const conn = await client.connect()
-            const hash = bcrypt.hashSync(u.password + pepper, parseInt(saltRounds))
-            
+            const hash = bcrypt.hashSync(u.password + pepper, parseInt(saltRounds))      
             const sql = `INSERT INTO users (first_name, last_name,password) VALUES ('${u.first_name}', '${u.last_name}','${hash}') RETURNING id, first_name, last_name`
             const result = await conn.query(sql)
-            
-            //make sure to close connection
             conn.release()
-  
-            console.log("result id",result.rows[0])
             return result.rows[0];
         } catch(err){
             throw new Error(`cannot insert ${err}`)
         }
-
-        
     }
 
     async index(): Promise<User[]> {
         try {
-          // @ts-ignore
-          const conn = await Client.connect()
+          const conn = await client.connect()
           const sql = 'SELECT * FROM users'
-    
           const result = await conn.query(sql)
-    
           conn.release()
-    
           return result.rows 
         } catch (err) {
           throw new Error(`Could not get users. Error: ${err}`)
@@ -60,18 +49,28 @@ export class Users {
     async show(id: string): Promise<User> {
         try {
         const sql = 'SELECT * FROM users WHERE id=($1)'
-        // @ts-ignore
-        const conn = await Client.connect()
-    
+        const conn = await client.connect()
         const result = await conn.query(sql, [id])
-    
         conn.release()
-    
         return result.rows[0]
         } catch (err) {
             throw new Error(`Could not find user ${id}. Error: ${err}`)
         }
       }
+
+    async delete(id: string): Promise<boolean> {
+        try {
+        const sql = 'DELETE FROM users WHERE id=($1)'
+        const conn = await client.connect()
+        const result = await conn.query(sql, [id])
+        const book = result.rows[0]  
+        conn.release()  
+        return true
+            } catch (err) {
+                throw new Error(`Could not delete book ${id}. Error: ${err}`)
+                return false
+            }
+    }
 
     async authenticate(id:number, password:string): Promise<User | null>{
         const conn = await client.connect()

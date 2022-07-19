@@ -87,6 +87,7 @@ const users_routes = (app:express.Application) => {
     app.post('/create', create)
     app.get('/index', index)
     app.post('/login', authenticate)
+    //show
 }
 
 export default users_routes;
