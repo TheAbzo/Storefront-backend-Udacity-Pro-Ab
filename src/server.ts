@@ -1,5 +1,7 @@
 import express, { Request, Response } from 'express'
 import bodyParser from 'body-parser'
+import users_routes from './handlers/users_handler'
+import cors from 'cors'
 
 const app: express.Application = express()
 const address: string = "0.0.0.0:3002"
@@ -13,3 +15,7 @@ app.get('/', function (req: Request, res: Response) {
 app.listen(3002, function () {
     console.log(`starting app on: ${address}`)
 })
+
+//see if u want a middleware for authentication/authorization token
+//routes
+users_routes(app)
