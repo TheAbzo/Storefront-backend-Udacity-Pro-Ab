@@ -46,19 +46,20 @@ export class Users {
         }
     }
 
-    async show(id: string): Promise<User> {
+    async show(id: number): Promise<User> {
         try {
-        const sql = 'SELECT * FROM users WHERE id=($1)'
+        const sql = `SELECT * FROM users`
         const conn = await client.connect()
-        const result = await conn.query(sql, [id])
+        const result = await conn.query(sql)
         conn.release()
+        console.log("in show", result.rows[0])
         return result.rows[0]
         } catch (err) {
             throw new Error(`Could not find user ${id}. Error: ${err}`)
         }
       }
 
-    async delete(id: string): Promise<boolean> {
+    async delete(id: number): Promise<boolean> {
         try {
         const sql = 'DELETE FROM users WHERE id=($1)'
         const conn = await client.connect()

@@ -15,21 +15,25 @@ const {
 
 let client:Pool;
 
-if(ENV === 'test'){
-    client = new Pool({
-        host: POSTGRES_HOST,
-        port: 5432,
-        user: POSTGRES_USER,
-        password: POSTGRES_PASSWORD,
-        database: POSTGRES_TEST_DB
-    })
-}else{
+if(ENV === 'dev'){
+   
+    console.log("env is dev")
     client = new Pool({
         host: POSTGRES_HOST,
         port: 5432,
         user: POSTGRES_USER,
         password: POSTGRES_PASSWORD,
         database: POSTGRES_DB
+    })
+}else{
+    console.log("env is test")
+
+    client = new Pool({
+        host: POSTGRES_HOST,
+        port: 5432,
+        user: POSTGRES_USER,
+        password: POSTGRES_PASSWORD,
+        database: POSTGRES_TEST_DB
     })
 }
 
