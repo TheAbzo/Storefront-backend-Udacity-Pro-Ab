@@ -11,20 +11,24 @@ const userTest:User = {
 
 describe("Users Model", () => {
     
+    //id to be set in index
+    let id = 1
+
     it('Create method test', async () => {
         const result = await user.create(userTest)
-        console.log("result in create", result)
         expect(result).toBeInstanceOf(Object);
     });
 
     it('Index method test', async () => {
         const result = await user.index();
+        // console.log("Result of index iddddddddd" , result[0].id)
+        id = result[0].id
         expect(result).toBeInstanceOf(Array);
     });
 
     it('Show method test', async () => {
-        const result = await user.show(1);
-        console.log("result in show", result)
+        const result = await user.show(id);
+        // console.log("result in show", result)
         expect(result).toBeInstanceOf(Object);
     });
 

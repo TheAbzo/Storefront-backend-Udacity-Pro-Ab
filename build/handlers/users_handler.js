@@ -15,12 +15,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const users_1 = require("../models/users");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const dotenv_1 = __importDefault(require("dotenv"));
+const authentication_1 = __importDefault(require("../middleware/authentication"));
 const store = new users_1.Users();
 dotenv_1.default.config();
 //create env file next
 const { TOKEN_SECRET } = process.env;
-//return token on creating new user
+//return token on creating new user with his id in database
 const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("entered create");
     try {
         const user = {
             "id": 1,
@@ -29,44 +31,41 @@ const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             "password": `${req.body.password}`
         };
         //after it creates user with hashing, we create jwt token and send it back to frontend
-        console.log("uhm");
-        console.log(user);
         const theUser = yield store.create(user);
-        console.log("succ", theUser);
-        let token = jsonwebtoken_1.default.sign(theUser, (process.env.TOKEN_SECRET)); //takes 2 args, info we want to store, a string to sign token with(secret)
-        console.log("token", token);
-        res.json(token);
+        console.log("type", theUser[0].id);
+        let token = jsonwebtoken_1.default.sign(theUser[0], (process.env.TOKEN_SECRET)); //takes 2 args, info we want to store, a string to sign token with(secret)
+        // res.json(token).send(`id is ${theUser[0].id}`)
+        res.status(200).json({ "token": token, "id": theUser[0].id });
     }
     catch (err) {
-        console.log("here");
         res.status(400);
         res.json(err);
     }
 });
 //index
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const authorizationHeader = req.headers.authorization;
-        if (authorizationHeader != undefined) {
-            const token = authorizationHeader.split(' ')[1];
-            jsonwebtoken_1.default.verify(token, process.env.TOKEN_SECRET);
-        }
-    }
-    catch (error) {
-        res.status(401);
-        res.json('Access denied, invalid token');
-        return;
-    }
+    console.log("entered index");
     try {
         const users = yield store.index();
         res.json(users);
     }
     catch (error) {
-        res.status(400);
+        res.status(401);
         res.json(error);
     }
 });
 //show
+const show = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("entered index");
+    try {
+        const users = yield store.show(parseInt(req.params.id));
+        res.json(users);
+    }
+    catch (error) {
+        res.status(401);
+        res.json(error);
+    }
+});
 //authenticate calls athenticate(hashing) 
 //returns a token on authnticating an existing user
 const authenticate = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -82,15 +81,15 @@ const authenticate = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         res.json(token);
     }
     catch (error) {
-        res.status(401);
-        res.json({ error });
+        res.status(401).send("Error 401: Unauthorized");
+        // res.json({ error })
     }
 });
 //all my routes
 const users_routes = (app) => {
     app.post('/create', create);
-    app.get('/index', index);
+    app.get('/index', authentication_1.default, index);
+    app.get('/show/:id', authentication_1.default, show);
     app.post('/login', authenticate);
-    //show
 };
 exports.default = users_routes;

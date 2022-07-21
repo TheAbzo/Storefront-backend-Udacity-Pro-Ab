@@ -6,10 +6,8 @@ const verifyAuthToken = (req: Request, res: Response, next: NextFunction) => {
     try {
         const authorizationHeader = req.headers.authorization
         if(authorizationHeader){
-            const token = authorizationHeader.split(' ')[1]
-            console.log("token is",token)
+            const token = authorizationHeader.split(' ')[1] 
             const decoded = jwt.verify(token, process.env.TOKEN_SECRET as string)
-            console.log("decoded is ", decoded)
             if(decoded) {
                 next();
             }else {
@@ -19,7 +17,6 @@ const verifyAuthToken = (req: Request, res: Response, next: NextFunction) => {
         else{
             throw 'exception';
         }
-        
     } catch (error) {
         res.status(401).send("Error 401: Unauthorized")
     }

@@ -29,7 +29,8 @@ class Users {
                 const sql = `INSERT INTO users (first_name, last_name,password) VALUES ('${u.first_name}', '${u.last_name}','${hash}') RETURNING id, first_name, last_name`;
                 const result = yield conn.query(sql);
                 conn.release();
-                return result.rows[0];
+                console.log("Create", result.rows);
+                return result.rows;
             }
             catch (err) {
                 throw new Error(`cannot insert ${err}`);
@@ -53,7 +54,7 @@ class Users {
     show(id) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const sql = `SELECT * FROM users`;
+                const sql = `SELECT * FROM users WHERE id = ${id}`;
                 const conn = yield database_1.default.connect();
                 const result = yield conn.query(sql);
                 conn.release();

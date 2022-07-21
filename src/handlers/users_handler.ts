@@ -27,7 +27,7 @@ const create = async (req:Request, res:Response) =>{
     console.log("type",theUser[0].id)
     let token = jwt.sign(theUser[0],(process.env.TOKEN_SECRET) as jwt.Secret) //takes 2 args, info we want to store, a string to sign token with(secret)
     // res.json(token).send(`id is ${theUser[0].id}`)
-    res.json({"token":token, "id":theUser[0].id});
+    res.status(200).json({"token":token, "id":theUser[0].id});
     } catch(err){
         res.status(400)
         res.json(err)
@@ -41,7 +41,7 @@ const index = async (req:Request, res:Response) => {
     const users = await store.index();
     res.json(users);
     } catch (error) {
-        res.status(400)
+        res.status(401)
         res.json(error)
     }
 }
@@ -53,7 +53,7 @@ const show = async (req:Request, res:Response) => {
     const users = await store.show(parseInt(req.params.id));
     res.json(users);
     } catch (error) {
-        res.status(400)
+        res.status(401)
         res.json(error)
     }
 }

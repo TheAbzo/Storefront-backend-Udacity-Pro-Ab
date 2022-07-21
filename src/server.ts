@@ -19,3 +19,5 @@ app.listen(3002, function () {
 //see if u want a middleware for authentication/authorization token
 //routes
 users_routes(app)
+
+export default app;
