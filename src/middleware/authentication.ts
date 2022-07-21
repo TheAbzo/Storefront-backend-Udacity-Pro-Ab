@@ -6,6 +6,7 @@ const verifyAuthToken = (req: Request, res: Response, next: NextFunction) => {
     try {
         console.log("here in auth token")
         const authorizationHeader = req.headers.authorization
+        console.log("authhhhh is", authorizationHeader)
         if(authorizationHeader){
             const token = authorizationHeader.split(' ')[1] 
             const decoded = jwt.verify(token, process.env.TOKEN_SECRET as string)

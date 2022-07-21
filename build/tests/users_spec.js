@@ -20,22 +20,22 @@ const userTest = {
 describe("Users Model", () => {
     //id to be set in index
     let id = 1;
-    it('Create method test', () => __awaiter(void 0, void 0, void 0, function* () {
+    it('Users: Create method test', () => __awaiter(void 0, void 0, void 0, function* () {
         const result = yield user.create(userTest);
         expect(result).toBeInstanceOf(Object);
     }));
-    it('Index method test', () => __awaiter(void 0, void 0, void 0, function* () {
+    it('Users: Index method test', () => __awaiter(void 0, void 0, void 0, function* () {
         const result = yield user.index();
         // console.log("Result of index iddddddddd" , result[0].id)
         id = result[0].id;
         expect(result).toBeInstanceOf(Array);
     }));
-    it('Show method test', () => __awaiter(void 0, void 0, void 0, function* () {
+    it('Users: Show method test', () => __awaiter(void 0, void 0, void 0, function* () {
         const result = yield user.show(id);
         // console.log("result in show", result)
         expect(result).toBeInstanceOf(Object);
     }));
-    it('Delete method test', () => __awaiter(void 0, void 0, void 0, function* () {
+    it('Users: Delete method test', () => __awaiter(void 0, void 0, void 0, function* () {
         const result = yield user.delete(1);
         expect(result).toBe(true);
     }));

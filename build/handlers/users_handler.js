@@ -58,8 +58,8 @@ const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 const show = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log("entered index");
     try {
-        const users = yield store.show(parseInt(req.params.id));
-        res.json(users);
+        const user = yield store.show(parseInt(req.params.id));
+        res.json(user);
     }
     catch (error) {
         res.status(401);

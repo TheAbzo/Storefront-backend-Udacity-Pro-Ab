@@ -35,7 +35,7 @@ const index = async (_req:Request, res:Response) => {
     console.log("entered product index")
     try {
     const products = await store.index();
-    res.json(products);
+    res.status(200).json(products);
     } catch (error) {
         res.status(401)
         res.json(error)
@@ -47,7 +47,7 @@ const show = async (req:Request, res:Response) => {
     console.log("entered products show")
     try {
     const product = await store.show(parseInt(req.params.id));
-    res.json(product);
+    res.status(200).json(product);
     } catch (error) {
         res.status(401)
         res.json(error)

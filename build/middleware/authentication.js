@@ -6,7 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const verifyAuthToken = (req, res, next) => {
     try {
+        console.log("here in auth token");
         const authorizationHeader = req.headers.authorization;
+        console.log("authhhhh is", authorizationHeader);
         if (authorizationHeader) {
             const token = authorizationHeader.split(' ')[1];
             const decoded = jsonwebtoken_1.default.verify(token, process.env.TOKEN_SECRET);
