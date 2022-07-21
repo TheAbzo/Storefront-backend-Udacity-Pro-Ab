@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express'
 import bodyParser from 'body-parser'
 import users_routes from './handlers/users_handler'
-import cors from 'cors'
+import products_routes from './handlers/products_handlers'
 
 const app: express.Application = express()
 const address: string = "0.0.0.0:3002"
@@ -19,5 +19,7 @@ app.listen(3002, function () {
 //see if u want a middleware for authentication/authorization token
 //routes
 users_routes(app)
+products_routes(app)
+
 
 export default app;

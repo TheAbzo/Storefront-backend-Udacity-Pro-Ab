@@ -4,6 +4,7 @@ import { Request, Response, NextFunction } from "express";
 
 const verifyAuthToken = (req: Request, res: Response, next: NextFunction) => {
     try {
+        console.log("here in auth token")
         const authorizationHeader = req.headers.authorization
         if(authorizationHeader){
             const token = authorizationHeader.split(' ')[1] 

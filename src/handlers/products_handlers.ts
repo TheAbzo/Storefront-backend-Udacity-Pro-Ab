@@ -5,9 +5,12 @@ import verifyAuthToken from '../middleware/authentication';
 const store =  new Products();
 
 
+
+console.log("in products handlers")
+
 //needs user token
 const create = async (req:Request, res:Response) =>{
-    console.log("entered create")
+    console.log("entered product create")
     try {
         const product:Product = {
             "id":1,
@@ -21,13 +24,14 @@ const create = async (req:Request, res:Response) =>{
         // res.json(token).send(`id is ${theUser[0].id}`)
         res.status(200).json({"id":theProduct[0].id});
     } catch(err){
+        console.log("Failed")
         res.status(400)
         res.json(err)
     }
 }
 
 //index
-const index = async (req:Request, res:Response) => {
+const index = async (_req:Request, res:Response) => {
     console.log("entered product index")
     try {
     const products = await store.index();
@@ -50,11 +54,11 @@ const show = async (req:Request, res:Response) => {
     }
 }
 
-//all my routes
-const users_routes = (app:express.Application) => {
-    app.post('products/create', verifyAuthToken, create)
-    app.get('products/index',index)
-    app.get('products/show/:id',show)
+//my product routes
+const products_routes = (app:express.Application) => {
+    app.post('/products_create',verifyAuthToken, create)
+    app.get('/products_index',index)
+    app.get('/products_show/:id',show)
 }
 
-export default users_routes;
+export default products_routes;
