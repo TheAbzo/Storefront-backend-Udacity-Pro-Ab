@@ -2,6 +2,7 @@ import express, {Request,Response} from 'express'
 import { Users, User } from '../models/users'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv';
+import verifyAuthToken from '../middleware/authentication';
 
 const store =  new Users();
 dotenv.config()
@@ -11,8 +12,9 @@ const {
    } = process.env
 
 
-//return token on creating new user
+//return token on creating new user with his id in database
 const create = async (req:Request, res:Response) =>{
+    console.log("entered create")
     try {
         const user:User = {
             "id":1,
@@ -21,15 +23,12 @@ const create = async (req:Request, res:Response) =>{
             "password":`${req.body.password}`
         }
          //after it creates user with hashing, we create jwt token and send it back to frontend
-         console.log("uhm")
-         console.log(user)
     const theUser = await store.create(user);
-    console.log("succ", theUser)
-    let token = jwt.sign(theUser,(process.env.TOKEN_SECRET) as jwt.Secret) //takes 2 args, info we want to store, a string to sign token with(secret)
-    console.log("token",token)
-    res.json(token)
+    console.log("type",theUser[0].id)
+    let token = jwt.sign(theUser[0],(process.env.TOKEN_SECRET) as jwt.Secret) //takes 2 args, info we want to store, a string to sign token with(secret)
+    // res.json(token).send(`id is ${theUser[0].id}`)
+    res.json({"token":token, "id":theUser[0].id});
     } catch(err){
-        console.log("here")
         res.status(400)
         res.json(err)
     }
@@ -37,20 +36,7 @@ const create = async (req:Request, res:Response) =>{
 
 //index
 const index = async (req:Request, res:Response) => {
-
-    try {
-        const authorizationHeader = req.headers.authorization
-        if(authorizationHeader != undefined){
-            const token = authorizationHeader.split(' ')[1]
-            jwt.verify(token, process.env.TOKEN_SECRET as string)
-        }
-        
-    } catch(error) {
-        res.status(401)
-        res.json('Access denied, invalid token')
-        return
-    }
-
+    console.log("entered index")
     try {
     const users = await store.index();
     res.json(users);
@@ -61,6 +47,16 @@ const index = async (req:Request, res:Response) => {
 }
 
 //show
+const show = async (req:Request, res:Response) => {
+    console.log("entered index")
+    try {
+    const users = await store.show(parseInt(req.params.id));
+    res.json(users);
+    } catch (error) {
+        res.status(400)
+        res.json(error)
+    }
+}
 
 //authenticate calls athenticate(hashing) 
 //returns a token on authnticating an existing user
@@ -76,8 +72,8 @@ const authenticate = async (req: Request, res: Response) => {
         let token = jwt.sign({ user: u }, process.env.TOKEN_SECRET as string);
         res.json(token)
     } catch(error) {
-        res.status(401)
-        res.json({ error })
+        res.status(401).send("Error 401: Unauthorized")
+        // res.json({ error })
     }
   }
 
@@ -85,9 +81,9 @@ const authenticate = async (req: Request, res: Response) => {
 //all my routes
 const users_routes = (app:express.Application) => {
     app.post('/create', create)
-    app.get('/index', index)
+    app.get('/index', verifyAuthToken,index)
+    app.get('/show/:id', verifyAuthToken,show)
     app.post('/login', authenticate)
-    //show
 }
 
 export default users_routes;

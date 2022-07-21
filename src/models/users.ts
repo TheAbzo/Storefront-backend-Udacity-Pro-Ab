@@ -28,7 +28,8 @@ export class Users {
             const sql = `INSERT INTO users (first_name, last_name,password) VALUES ('${u.first_name}', '${u.last_name}','${hash}') RETURNING id, first_name, last_name`
             const result = await conn.query(sql)
             conn.release()
-            return result.rows[0];
+            console.log("Create", result.rows)
+            return result.rows;
         } catch(err){
             throw new Error(`cannot insert ${err}`)
         }
@@ -48,7 +49,7 @@ export class Users {
 
     async show(id: number): Promise<User> {
         try {
-        const sql = `SELECT * FROM users`
+        const sql = `SELECT * FROM users WHERE id = ${id}`
         const conn = await client.connect()
         const result = await conn.query(sql)
         conn.release()
