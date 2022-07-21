@@ -50,8 +50,8 @@ const index = async (req:Request, res:Response) => {
 const show = async (req:Request, res:Response) => {
     console.log("entered index")
     try {
-    const users = await store.show(parseInt(req.params.id));
-    res.json(users);
+    const user = await store.show(parseInt(req.params.id));
+    res.json(user);
     } catch (error) {
         res.status(401)
         res.json(error)
