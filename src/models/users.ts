@@ -69,8 +69,7 @@ export class Users {
         conn.release()  
         return true
             } catch (err) {
-                throw new Error(`Could not delete book ${id}. Error: ${err}`)
-                return false
+                throw new Error(`Could not delete user ${id}. Error: ${err}`)
             }
     }
 

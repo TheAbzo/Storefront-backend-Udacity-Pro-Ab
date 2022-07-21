@@ -41,7 +41,4 @@ describe('suite for testing user handlers endpoints', (): void => {
         const response = await request.post(`/login`).send(user);
         expect(response.status).toBe(200);
     });
-
-
-
 });
