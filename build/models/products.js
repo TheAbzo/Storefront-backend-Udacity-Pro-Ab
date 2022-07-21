@@ -12,24 +12,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Users = void 0;
+exports.Products = void 0;
 const database_1 = __importDefault(require("../database"));
-const bcrypt_1 = __importDefault(require("bcrypt"));
-const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
-const { BCRYPT_PASSWORD, SALT_ROUNDS } = process.env;
-const pepper = (BCRYPT_PASSWORD);
-const saltRounds = (SALT_ROUNDS);
-class Users {
-    create(u) {
+class Products {
+    create(p) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const conn = yield database_1.default.connect();
-                const hash = bcrypt_1.default.hashSync(u.password + pepper, parseInt(saltRounds));
-                const sql = `INSERT INTO users (first_name, last_name,password) VALUES ('${u.first_name}', '${u.last_name}','${hash}') RETURNING id, first_name, last_name`;
+                const sql = `INSERT INTO products (name, price,category) VALUES ('${p.name}', '${p.price}','${p.category}') RETURNING id, name, price, category`;
                 const result = yield conn.query(sql);
                 conn.release();
-                console.log("Create", result.rows);
+                console.log("Create products", result.rows);
                 return result.rows;
             }
             catch (err) {
@@ -41,35 +34,35 @@ class Users {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const conn = yield database_1.default.connect();
-                const sql = 'SELECT * FROM users';
+                const sql = 'SELECT * FROM products';
                 const result = yield conn.query(sql);
                 conn.release();
                 return result.rows;
             }
             catch (err) {
-                throw new Error(`Could not get users. Error: ${err}`);
+                throw new Error(`Could not get products. Error: ${err}`);
             }
         });
     }
     show(id) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const sql = `SELECT * FROM users WHERE id = ${id}`;
+                const sql = `SELECT * FROM products WHERE id = ${id}`;
                 const conn = yield database_1.default.connect();
                 const result = yield conn.query(sql);
                 conn.release();
-                console.log("in show", result.rows[0]);
+                console.log("in show products", result.rows[0]);
                 return result.rows[0];
             }
             catch (err) {
-                throw new Error(`Could not find user ${id}. Error: ${err}`);
+                throw new Error(`Could not find product ${id}. Error: ${err}`);
             }
         });
     }
     delete(id) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const sql = 'DELETE FROM users WHERE id=($1)';
+                const sql = 'DELETE FROM products WHERE id=($1)';
                 const conn = yield database_1.default.connect();
                 const result = yield conn.query(sql, [id]);
                 const book = result.rows[0];
@@ -77,28 +70,9 @@ class Users {
                 return true;
             }
             catch (err) {
-                throw new Error(`Could not delete user ${id}. Error: ${err}`);
+                throw new Error(`Could not delete product ${id}. Error: ${err}`);
             }
-        });
-    }
-    authenticate(id, password) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const conn = yield database_1.default.connect();
-            const sql = `select * from users where id = $1`;
-            const result = yield conn.query(sql, [id]);
-            console.log(password + pepper);
-            //if id(user) exists
-            if (result.rows.length) {
-                const user = result.rows[0];
-                //compare passwords
-                if (bcrypt_1.default.compareSync(password + pepper, user.password)) {
-                    console.log("ssss");
-                    //im selecting id only
-                    return result.rows[0];
-                }
-            }
-            return null;
         });
     }
 }
-exports.Users = Users;
+exports.Products = Products;

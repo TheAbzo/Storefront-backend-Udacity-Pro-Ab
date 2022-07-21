@@ -48,7 +48,6 @@ describe('suite for testing user handlers endpoints', () => {
             "password": "123456"
         };
         const response = yield request.post(`/login`).send(user);
-        console.log(response);
         expect(response.status).toBe(200);
     }));
 });
