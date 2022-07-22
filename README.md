@@ -29,15 +29,15 @@ your env file must have something like this:
 
 ## Routes
 ### User Routes
-- [POST] /create        **creates a user, takes in a json without id, and returns Token and the generated serial id.
+- [POST] /create        emsp :creates a user, takes in a json without id, and returns Token and the generated serial id.
                   -        ex: `{   
                                 "first_name" : "hi",
                                 "last_name" : "feraly",
                                 "password" : "123456"
                            }`
-- [POST] /login         **takes in all the info of the user including the serial id, and returns a jwt token. (if info invalid, then unauthorized)
-- [GET] /index          **shows all users [bearer token required]
-- [GET] /show/:id       **show user of this id [bearer token required]
+- [POST] /login         emsp :takes in all the info of the user including the serial id, and returns a jwt token. (if info invalid, then unauthorized)
+- [GET] /index          emsp :shows all users [bearer token required]
+- [GET] /show/:id       emsp :show user of this id [bearer token required]
 
 
 ### Products Routes
