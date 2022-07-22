@@ -12,67 +12,84 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Products = void 0;
+exports.Orders = void 0;
 const database_1 = __importDefault(require("../database"));
-class Products {
-    create(p) {
+class Orders {
+    //return order id
+    create(o) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
+                //insert in orders table: user_id, status
                 const conn = yield database_1.default.connect();
-                const sql = `INSERT INTO products (name, price,category) VALUES ('${p.name}', '${p.price}','${p.category}') RETURNING id, name, price, category`;
-                const result = yield conn.query(sql);
+                const sql = `INSERT into orders (user_id, status) Values (${o.user_id},'${o.status}') RETURNING id`;
+                const resultId = yield conn.query(sql);
+                console.log("order id is", resultId.rows[0].id);
+                //loop through products array
+                for (const i of o.products) {
+                    //insert in orders_products table
+                    const sql2 = `insert into products_orders (id_order, id_product, quantity) Values (${resultId.rows[0].id},${i.product_id},${i.quantity});`;
+                    yield conn.query(sql2);
+                }
+                //return id of orders
                 conn.release();
-                // console.log("Create products", result.rows)
-                return result.rows;
+                return resultId.rows[0].id;
             }
             catch (err) {
                 throw new Error(`cannot insert ${err}`);
             }
         });
     }
+    //return all orders
     index() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
+                //join 2 tables and return all
                 const conn = yield database_1.default.connect();
-                const sql = 'SELECT * FROM products';
+                const sql = 'select id_order, id_product,quantity, user_id, status from products full outer join products_orders on products.id = products_orders.id_product inner join orders on products_orders.id_order = orders.id';
                 const result = yield conn.query(sql);
                 conn.release();
                 return result.rows;
             }
             catch (err) {
-                throw new Error(`Could not get products. Error: ${err}`);
+                throw new Error(`Could not get orders. Error: ${err}`);
             }
         });
     }
+    //return specific order of user id
+    //takes user id and returns order of it
     show(id) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const sql = `SELECT * FROM products WHERE id = ${id}`;
+                //join 4 tables on specific id
+                const sql = `select id_order, id_product,quantity, user_id, status from products full outer join products_orders on products.id = products_orders.id_product inner join orders on products_orders.id_order = orders.id where orders.user_id = ${id}`;
                 const conn = yield database_1.default.connect();
                 const result = yield conn.query(sql);
                 conn.release();
-                // console.log("in show products", result.rows[0])
-                return result.rows[0];
+                return result.rows;
             }
             catch (err) {
-                throw new Error(`Could not find product ${id}. Error: ${err}`);
+                throw new Error(`Could not find order ${id}. Error: ${err}`);
             }
         });
     }
+    //delete order
+    //takes order id
     delete(id) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const sql = 'DELETE FROM products WHERE id=($1)';
+                //remove row of id in orders and order tables
+                const sql = 'DELETE FROM orders WHERE id=($1)';
+                const sql2 = 'DELETE FROM products_orders WHERE id_order=($1)';
                 const conn = yield database_1.default.connect();
                 const result = yield conn.query(sql, [id]);
-                const book = result.rows[0];
+                const result2 = yield conn.query(sql2, [id]);
                 conn.release();
                 return true;
             }
             catch (err) {
-                throw new Error(`Could not delete product ${id}. Error: ${err}`);
+                throw new Error(`Could not delete order ${id}. Error: ${err}`);
             }
         });
     }
 }
-exports.Products = Products;
+exports.Orders = Orders;

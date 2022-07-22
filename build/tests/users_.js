@@ -9,35 +9,34 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const products_1 = require("../models/products");
-const product = new products_1.Products();
-const productTest = {
+const users_1 = require("../models/users");
+const user = new users_1.Users();
+const userTest = {
     "id": 1,
-    "name": "sony",
-    "price": 5,
-    "category": "phone"
+    "first_name": "Abzo",
+    "last_name": "The Abzo",
+    "password": "123"
 };
-describe("Products Model", () => {
+describe("Users Model", () => {
     //id to be set in index
     let id = 1;
-    it('Products: Create method test', () => __awaiter(void 0, void 0, void 0, function* () {
-        const result = yield product.create(productTest);
-        // console.log("products create", result)
+    it('Users: Create method test', () => __awaiter(void 0, void 0, void 0, function* () {
+        const result = yield user.create(userTest);
         expect(result).toBeInstanceOf(Object);
     }));
-    it('Products: Index method test', () => __awaiter(void 0, void 0, void 0, function* () {
-        const result = yield product.index();
-        // console.log("products index first row" , result[0])
+    it('Users: Index method test', () => __awaiter(void 0, void 0, void 0, function* () {
+        const result = yield user.index();
+        // console.log("Result of index iddddddddd" , result[0].id)
         id = result[0].id;
         expect(result).toBeInstanceOf(Array);
     }));
-    it('Products: Show method test', () => __awaiter(void 0, void 0, void 0, function* () {
-        const result = yield product.show(id);
-        // console.log("products result in show", result)
+    it('Users: Show method test', () => __awaiter(void 0, void 0, void 0, function* () {
+        const result = yield user.show(id);
+        // console.log("result in show", result)
         expect(result).toBeInstanceOf(Object);
     }));
-    it('Products: Delete method test', () => __awaiter(void 0, void 0, void 0, function* () {
-        const result = yield product.delete(1);
+    it('Users: Delete method test', () => __awaiter(void 0, void 0, void 0, function* () {
+        const result = yield user.delete(1);
         expect(result).toBe(true);
     }));
 });

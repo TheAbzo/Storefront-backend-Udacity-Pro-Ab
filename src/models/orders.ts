@@ -2,13 +2,13 @@ import client from "../database";
 
 
 interface product {
-    product_id: string,
+    product_id: number,
     quantity: number
 }
 export type Order = {
     id : number;
-    user_id : string;
     products : product[]; //id:quantity
+    user_id : number;
     status : string;
 }
 
@@ -22,15 +22,16 @@ export class Orders {
             const sql = `INSERT into orders (user_id, status) Values (${o.user_id},'${o.status}') RETURNING id`
             const resultId = await conn.query(sql)
 
-            console.log("order id is",resultId.oid)
+            console.log("order id is",resultId.rows[0].id)
             //loop through products array
             for(const i of o.products){
                 //insert in orders_products table
-                const sql2 = `insert into products_orders (id_order, id_product, quantity) Values (${resultId.oid},${i.product_id},${i.quantity});`
+                const sql2 = `insert into products_orders (id_order, id_product, quantity) Values (${resultId.rows[0].id},${i.product_id},${i.quantity});`
+                await conn.query(sql2)
             }
             //return id of orders
             conn.release()
-            return resultId.oid;
+            return resultId.rows[0].id;
         } catch(err){
             throw new Error(`cannot insert ${err}`)
         }
@@ -41,7 +42,7 @@ export class Orders {
         try {
             //join 2 tables and return all
           const conn = await client.connect()
-          const sql = 'select id_order, id_product, name, price, category,quantity from products inner join products_orders on products.id = products_orders.id_product;'
+          const sql = 'select id_order, id_product,quantity, user_id, status from products full outer join products_orders on products.id = products_orders.id_product inner join orders on products_orders.id_order = orders.id';
           const result = await conn.query(sql)
           conn.release()
           return result.rows 
@@ -55,7 +56,7 @@ export class Orders {
     async show(id: number): Promise<Order[]> {
         try {
         //join 4 tables on specific id
-        const sql = `select u.first_name, u.last_name, po.id_order, p.id, p.name, p.price, p.category,po.quantity from products p inner join products_orders po on p.id = po.id_product Inner join orders o on o.id = po.id_order inner join users u on u.id = o.id where u.id = ${id};`
+        const sql = `select id_order, id_product,quantity, user_id, status from products full outer join products_orders on products.id = products_orders.id_product inner join orders on products_orders.id_order = orders.id where orders.user_id = ${id}`
         const conn = await client.connect()
         const result = await conn.query(sql)
         conn.release()

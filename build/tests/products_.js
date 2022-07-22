@@ -22,18 +22,18 @@ describe("Products Model", () => {
     let id = 1;
     it('Products: Create method test', () => __awaiter(void 0, void 0, void 0, function* () {
         const result = yield product.create(productTest);
-        // console.log("products create", result)
+        console.log("products create", result);
         expect(result).toBeInstanceOf(Object);
     }));
     it('Products: Index method test', () => __awaiter(void 0, void 0, void 0, function* () {
         const result = yield product.index();
-        // console.log("products index first row" , result[0])
+        console.log("products index first row", result[0]);
         id = result[0].id;
         expect(result).toBeInstanceOf(Array);
     }));
     it('Products: Show method test', () => __awaiter(void 0, void 0, void 0, function* () {
         const result = yield product.show(id);
-        // console.log("products result in show", result)
+        console.log("products result in show", result);
         expect(result).toBeInstanceOf(Object);
     }));
     it('Products: Delete method test', () => __awaiter(void 0, void 0, void 0, function* () {

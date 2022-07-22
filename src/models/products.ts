@@ -15,7 +15,7 @@ export class Products {
             const sql = `INSERT INTO products (name, price,category) VALUES ('${p.name}', '${p.price}','${p.category}') RETURNING id, name, price, category`
             const result = await conn.query(sql)
             conn.release()
-            console.log("Create products", result.rows)
+            // console.log("Create products", result.rows)
             return result.rows;
         } catch(err){
             throw new Error(`cannot insert ${err}`)
@@ -40,7 +40,7 @@ export class Products {
         const conn = await client.connect()
         const result = await conn.query(sql)
         conn.release()
-        console.log("in show products", result.rows[0])
+        // console.log("in show products", result.rows[0])
         return result.rows[0]
         } catch (err) {
             throw new Error(`Could not find product ${id}. Error: ${err}`)
