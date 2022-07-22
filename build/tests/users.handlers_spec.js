@@ -17,19 +17,16 @@ const supertest_1 = __importDefault(require("supertest"));
 const request = (0, supertest_1.default)(server_1.default);
 describe('suite for testing user handlers endpoints', () => {
     let id = 0;
-    let token = "";
     it('/create user endpoint works well', () => __awaiter(void 0, void 0, void 0, function* () {
         const user = {
-            "first_name": "Abzo",
-            "last_name": "feraly",
-            "password": "123456"
+            first_name: 'Abzo',
+            last_name: 'feraly',
+            password: '123456'
         };
         const response = yield request.post('/create').send(user);
         if (response) {
             id = response.body.id;
-            token = response.body.token;
         }
-        // console.log("id is ",id, "token is ", token)
         expect(response.status).toBe(200);
     }));
     it('/index user endpoint works well', () => __awaiter(void 0, void 0, void 0, function* () {
@@ -42,10 +39,10 @@ describe('suite for testing user handlers endpoints', () => {
     }));
     it('/login user endpoint works well', () => __awaiter(void 0, void 0, void 0, function* () {
         const user = {
-            "id": `${id}`,
-            "first_name": "Abzo",
-            "last_name": "feraly",
-            "password": "123456"
+            id: id,
+            first_name: 'Abzo',
+            last_name: 'feraly',
+            password: '123456'
         };
         const response = yield request.post(`/login`).send(user);
         expect(response.status).toBe(200);

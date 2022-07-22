@@ -18,8 +18,8 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const { BCRYPT_PASSWORD, SALT_ROUNDS } = process.env;
-const pepper = (BCRYPT_PASSWORD);
-const saltRounds = (SALT_ROUNDS);
+const pepper = BCRYPT_PASSWORD;
+const saltRounds = SALT_ROUNDS;
 class Users {
     create(u) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -29,7 +29,6 @@ class Users {
                 const sql = `INSERT INTO users (first_name, last_name,password) VALUES ('${u.first_name}', '${u.last_name}','${hash}') RETURNING id, first_name, last_name`;
                 const result = yield conn.query(sql);
                 conn.release();
-                console.log("Create", result.rows);
                 return result.rows;
             }
             catch (err) {
@@ -71,8 +70,7 @@ class Users {
             try {
                 const sql = 'DELETE FROM users WHERE id=($1)';
                 const conn = yield database_1.default.connect();
-                const result = yield conn.query(sql, [id]);
-                const book = result.rows[0];
+                yield conn.query(sql, [id]);
                 conn.release();
                 return true;
             }

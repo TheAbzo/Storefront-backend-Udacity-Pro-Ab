@@ -1,21 +1,20 @@
-import { Products, Product } from "../models/products";
+import { Products, Product } from '../models/products';
 
-const product = new Products()
+const product = new Products();
 
-const productTest:Product = {
-    "id":1,
-    "name":"sony",
-    "price":5,
-    "category":"phone"
-}
+const productTest: Product = {
+    id: 1,
+    name: 'sony',
+    price: 5,
+    category: 'phone'
+};
 
-describe("Products Model", () => {
-    
+describe('Products Model', () => {
     //id to be set in index
-    let id = 1
+    let id = 1;
 
     it('Products: Create method test', async () => {
-        const result = await product.create(productTest)
+        const result = await product.create(productTest);
         // console.log("products create", result)
         expect(result).toBeInstanceOf(Object);
     });
@@ -23,7 +22,7 @@ describe("Products Model", () => {
     it('Products: Index method test', async () => {
         const result = await product.index();
         // console.log("products index first row" , result[0])
-        id = result[0].id
+        id = result[0].id;
         expect(result).toBeInstanceOf(Array);
     });
 
@@ -34,8 +33,7 @@ describe("Products Model", () => {
     });
 
     it('Products: Delete method test', async () => {
-        const result = await product.delete(1)
+        const result = await product.delete(1);
         expect(result).toBe(true);
     });
-    
-})
+});

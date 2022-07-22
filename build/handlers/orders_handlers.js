@@ -12,10 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const orders_1 = require("../models/orders");
 const authentication_1 = require("../middleware/authentication");
 const store = new orders_1.Orders();
-console.log("in orders handlers");
 //show
 const show = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("entered order show");
     try {
         const order = yield store.show(parseInt(req.params.id));
         res.status(200).json(order);

@@ -17,17 +17,17 @@ const supertest_1 = __importDefault(require("supertest"));
 const request = (0, supertest_1.default)(server_1.default);
 describe('suite for testing product handlers endpoints', () => {
     let id = 0;
-    let token = "";
+    let token = '';
     it('/products_create endpoint works well', () => __awaiter(void 0, void 0, void 0, function* () {
         const user = {
-            "first_name": "Abzo",
-            "last_name": "feraly",
-            "password": "123456"
+            first_name: 'Abzo',
+            last_name: 'feraly',
+            password: '123456'
         };
         const product = {
-            "name": "xiaomi",
-            "price": 50,
-            "category": "phones"
+            name: 'xiaomi',
+            price: 50,
+            category: 'phones'
         };
         const response = yield request.post('/create').send(user);
         if (response) {
@@ -35,7 +35,10 @@ describe('suite for testing product handlers endpoints', () => {
             token = response.body.token;
         }
         // console.log(token)
-        const responseProduct = yield request.post('/products_create').set({ "authorization": `Bearer ${token}` }).send(product);
+        const responseProduct = yield request
+            .post('/products_create')
+            .set({ authorization: `Bearer ${token}` })
+            .send(product);
         expect(responseProduct.status).toBe(200);
     }));
     it('/products_index endpoint works well', () => __awaiter(void 0, void 0, void 0, function* () {

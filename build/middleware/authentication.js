@@ -23,7 +23,7 @@ const verifyAuthToken = (req, res, next) => {
         }
     }
     catch (error) {
-        res.status(401).send("Error 401: Unauthorized");
+        res.status(401).send('Error 401: Unauthorized');
     }
 };
 exports.verifyAuthToken = verifyAuthToken;
@@ -35,7 +35,7 @@ const authorizationToken = (req, res, next) => {
         if (authorizationHeader) {
             const token = authorizationHeader.split(' ')[1];
             const verified = jsonwebtoken_1.default.verify(token, process.env.TOKEN_SECRET);
-            if (verified.id === userId) {
+            if (verified.id === userId || verified.user.id === userId) {
                 next();
             }
             else {
@@ -47,7 +47,7 @@ const authorizationToken = (req, res, next) => {
         }
     }
     catch (error) {
-        res.status(401).send("Error 401: Unauthorized");
+        res.status(401).send('Error 401: Unauthorized');
     }
 };
 exports.authorizationToken = authorizationToken;

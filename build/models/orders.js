@@ -23,7 +23,6 @@ class Orders {
                 const conn = yield database_1.default.connect();
                 const sql = `INSERT into orders (user_id, status) Values (${o.user_id},'${o.status}') RETURNING id`;
                 const resultId = yield conn.query(sql);
-                console.log("order id is", resultId.rows[0].id);
                 //loop through products array
                 for (const i of o.products) {
                     //insert in orders_products table
@@ -81,8 +80,8 @@ class Orders {
                 const sql = 'DELETE FROM orders WHERE id=($1)';
                 const sql2 = 'DELETE FROM products_orders WHERE id_order=($1)';
                 const conn = yield database_1.default.connect();
-                const result = yield conn.query(sql, [id]);
-                const result2 = yield conn.query(sql2, [id]);
+                yield conn.query(sql2, [id]);
+                yield conn.query(sql, [id]);
                 conn.release();
                 return true;
             }

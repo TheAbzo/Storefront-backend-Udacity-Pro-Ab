@@ -12,12 +12,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const products_1 = require("../models/products");
 const product = new products_1.Products();
 const productTest = {
-    "id": 1,
-    "name": "sony",
-    "price": 5,
-    "category": "phone"
+    id: 1,
+    name: 'sony',
+    price: 5,
+    category: 'phone'
 };
-describe("Products Model", () => {
+describe('Products Model', () => {
     //id to be set in index
     let id = 1;
     it('Products: Create method test', () => __awaiter(void 0, void 0, void 0, function* () {

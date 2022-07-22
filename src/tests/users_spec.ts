@@ -1,28 +1,27 @@
-import { Users, User } from "../models/users";
+import { Users, User } from '../models/users';
 
-const user = new Users()
+const user = new Users();
 
-const userTest:User = {
-    "id":1,
-    "first_name":"bassant",
-    "last_name":"The Abzo",
-    "password":"123"
-}
+const userTest: User = {
+    id: 1,
+    first_name: 'bassant',
+    last_name: 'The Abzo',
+    password: '123'
+};
 
-describe("Users Model", () => {
-    
+describe('Users Model', () => {
     //id to be set in index
-    let id = 1
+    let id = 1;
 
     it('Users: Create method test', async () => {
-        const result = await user.create(userTest)
+        const result = await user.create(userTest);
         expect(result).toBeInstanceOf(Object);
     });
 
     it('Users: Index method test', async () => {
         const result = await user.index();
         // console.log("Result of index iddddddddd" , result[0].id)
-        id = result[0].id
+        id = result[0].id;
         expect(result).toBeInstanceOf(Array);
     });
 
@@ -33,8 +32,7 @@ describe("Users Model", () => {
     });
 
     it('Users: Delete method test', async () => {
-        const result = await user.delete(1)
+        const result = await user.delete(1);
         expect(result).toBe(true);
     });
-    
-})
+});

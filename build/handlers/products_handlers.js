@@ -12,32 +12,27 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const products_1 = require("../models/products");
 const authentication_1 = require("../middleware/authentication");
 const store = new products_1.Products();
-console.log("in products handlers");
 //needs user token
 const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("entered product create");
     try {
         const product = {
-            "id": 1,
-            "name": `${req.body.name}`,
-            "price": req.body.price,
-            "category": `${req.body.category}`
+            id: 1,
+            name: `${req.body.name}`,
+            price: req.body.price,
+            category: `${req.body.category}`
         };
         //after it creates user with hashing, we create jwt token and send it back to frontend
         const theProduct = yield store.create(product);
-        console.log("type", theProduct[0].id);
         // res.json(token).send(`id is ${theUser[0].id}`)
-        res.status(200).json({ "id": theProduct[0].id });
+        res.status(200).json({ id: theProduct[0].id });
     }
     catch (err) {
-        console.log("Failed");
         res.status(400);
         res.json(err);
     }
 });
 //index
 const index = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("entered product index");
     try {
         const products = yield store.index();
         res.status(200).json(products);
@@ -49,7 +44,6 @@ const index = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 //show
 const show = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("entered products show");
     try {
         const product = yield store.show(parseInt(req.params.id));
         res.status(200).json(product);

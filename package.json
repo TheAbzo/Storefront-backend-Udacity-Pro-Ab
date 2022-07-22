@@ -5,8 +5,10 @@
   "main": "server.js",
   "scripts": {
     "build": "npx tsc",
-    "dev": "npx ts-node src/server.ts",
-    "test": "npm run build && set ENV=test && db-migrate --env test up && jasmine && db-migrate db:drop test  --env test reset"
+    "dev": "db-migrate up && npx ts-node src/server.ts",
+    "test": "npm run build && set ENV=test && db-migrate db:drop store_front_test && db-migrate db:create store_front_test && db-migrate --env test up && jasmine && db-migrate db:drop store_front_test",
+    "format": "prettier --write src{,*/**/}*.{ts,tsx,js,jsx}",
+    "lint": "eslint . --ext .ts"
   },
   "keywords": [],
   "author": "TheAbzo",
@@ -32,8 +34,12 @@
     "@types/jsonwebtoken": "^8.5.8",
     "@types/pg": "^8.6.5",
     "@types/supertest": "^2.0.12",
+    "@typescript-eslint/eslint-plugin": "^5.30.7",
+    "@typescript-eslint/parser": "^5.30.7",
+    "eslint": "^8.20.0",
     "jasmine": "^4.2.1",
     "jasmine-spec-reporter": "^7.0.0",
+    "prettier": "^2.7.1",
     "typescript": "^4.7.4"
   }
 }

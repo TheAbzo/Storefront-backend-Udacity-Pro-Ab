@@ -22,33 +22,33 @@ const user = new users_1.Users();
 const product = new products_1.Products();
 const request = (0, supertest_1.default)(server_1.default);
 dotenv_1.default.config();
-//create env file next
-const { TOKEN_SECRET } = process.env;
 const userTest = {
-    "id": 1,
-    "first_name": "nora",
-    "last_name": "The Abzo",
-    "password": "123"
+    id: 1,
+    first_name: 'nora',
+    last_name: 'The Abzo',
+    password: '123'
 };
 const productTest1 = {
-    "id": 1,
-    "name": "sony",
-    "price": 5,
-    "category": "phone"
+    id: 1,
+    name: 'sony',
+    price: 5,
+    category: 'phone'
 };
 const productTest2 = {
-    "id": 2,
-    "name": "xiaomi",
-    "price": 4,
-    "category": "phone"
+    id: 2,
+    name: 'xiaomi',
+    price: 4,
+    category: 'phone'
 };
-describe("Orders Handlers", () => {
+describe('Orders Handlers', () => {
     it('Orders Handlers: orders/:id work just fine', () => __awaiter(void 0, void 0, void 0, function* () {
         yield product.create(productTest1);
         yield product.create(productTest2);
         const result2 = yield user.create(userTest);
-        let token = jsonwebtoken_1.default.sign(result2[0], (process.env.TOKEN_SECRET));
-        const response = yield request.post(`/orders/${result2[0].id}`).set({ "authorization": `Bearer ${token}` });
+        const token = jsonwebtoken_1.default.sign(result2[0], process.env.TOKEN_SECRET);
+        const response = yield request
+            .post(`/orders/${result2[0].id}`)
+            .set({ authorization: `Bearer ${token}` });
         expect(response.status).toBe(200);
     }));
 });

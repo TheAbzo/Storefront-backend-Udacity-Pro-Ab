@@ -10,7 +10,6 @@ dotenv_1.default.config();
 const { POSTGRES_HOST, POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_TEST_DB, ENV } = process.env;
 let client;
 if (ENV === 'dev') {
-    console.log("env is dev");
     client = new pg_1.Pool({
         host: POSTGRES_HOST,
         port: 5432,
@@ -20,7 +19,6 @@ if (ENV === 'dev') {
     });
 }
 else {
-    console.log("env is test");
     client = new pg_1.Pool({
         host: POSTGRES_HOST,
         port: 5432,

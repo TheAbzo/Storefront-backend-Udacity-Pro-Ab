@@ -63,9 +63,10 @@ class Products {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const sql = 'DELETE FROM products WHERE id=($1)';
+                const sql2 = 'DELETE FROM products_orders WHERE id_product=($1)';
                 const conn = yield database_1.default.connect();
-                const result = yield conn.query(sql, [id]);
-                const book = result.rows[0];
+                yield conn.query(sql2, [id]);
+                yield conn.query(sql, [id]);
                 conn.release();
                 return true;
             }

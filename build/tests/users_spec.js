@@ -12,12 +12,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const users_1 = require("../models/users");
 const user = new users_1.Users();
 const userTest = {
-    "id": 1,
-    "first_name": "bassant",
-    "last_name": "The Abzo",
-    "password": "123"
+    id: 1,
+    first_name: 'bassant',
+    last_name: 'The Abzo',
+    password: '123'
 };
-describe("Users Model", () => {
+describe('Users Model', () => {
     //id to be set in index
     let id = 1;
     it('Users: Create method test', () => __awaiter(void 0, void 0, void 0, function* () {
