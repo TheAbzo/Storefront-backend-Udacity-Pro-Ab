@@ -29,29 +29,29 @@ your env file must have something like this:
 
 ## Routes
 ### User Routes
-- [POST] /create   :creates a user, takes in a json without id, and returns Token and the generated serial id.
-          -        ex: `{   
-                        "first_name" : "hi",
-                        "last_name" : "feraly",
-                        "password" : "123456"
-                   }`
-- [POST] /login    :takes in all the info of the user including the serial id, and returns a jwt token. (if info invalid, then unauthorized)
-- [GET] /index     :shows all users [bearer token required]
-- [GET] /show/:id  :show user of this id [bearer token required]
+- [POST] /create        **creates a user, takes in a json without id, and returns Token and the generated serial id.
+                  -        ex: `{   
+                                "first_name" : "hi",
+                                "last_name" : "feraly",
+                                "password" : "123456"
+                           }`
+- [POST] /login         **takes in all the info of the user including the serial id, and returns a jwt token. (if info invalid, then unauthorized)
+- [GET] /index          **shows all users [bearer token required]
+- [GET] /show/:id       **show user of this id [bearer token required]
 
 
 ### Products Routes
-- [POST] /products_create :creates new product [bearer token required]
+- [POST] /products_create       **creates new product [bearer token required]
           -            ex: `{   
                             "name" : "xiaomi",
                             "price" : 50,
                             "category" : "phones"
                          }`
-- [GET] /products_index :shows all products
-- [GET] /products_show/:id :shows the specific id 
+- [GET] /products_index          **shows all products
+- [GET] /products_show/:id       **shows the specific id 
 
 ### Order Routes
-- [POST] /orders/:id  :show current Order by user (args: user id)[bearer token required]
+- [POST] /orders/:id            **show current Order by user (args: user id)[bearer token required]
 
 ## Schema
 - users table [Data: id(serial), first_name, last_name, password]
