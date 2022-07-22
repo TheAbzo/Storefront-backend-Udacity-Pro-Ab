@@ -62,10 +62,14 @@ your env file must have something like this:
         - show current Order by user (args: user id)[bearer token required]
 
 ## Schema
-- users table [Data: id(serial), first_name, last_name, password]
-- products table [Data: id(serial), name, price, category]
-- orders table [Data: id(serial), user_id, status]
-- products_orders table [Data: id_order(foreign key), id_product(foreign key), quantity]
+- [Table]users:
+        -[Data: id(serial), first_name, last_name, password]
+- [Table]products: 
+        -[Data: id(serial), name, price, category]
+- [Table]orders: 
+        -[Data: id(serial), user_id, status]
+- [Table]products_orders: 
+        -[Data: id_order(foreign key), id_product(foreign key), quantity]
 
 
 
