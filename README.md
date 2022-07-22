@@ -63,13 +63,13 @@ your env file must have something like this:
 
 ## Schema
 - [Table]users:
-        -[Data: id(serial), first_name, last_name, password]
+        - [Data: id(serial), first_name, last_name, password]
 - [Table]products: 
-        -[Data: id(serial), name, price, category]
+        - [Data: id(serial), name, price, category]
 - [Table]orders: 
-        -[Data: id(serial), user_id, status]
+        - [Data: id(serial), user_id, status]
 - [Table]products_orders: 
-        -[Data: id_order(foreign key), id_product(foreign key), quantity]
+        - [Data: id_order(foreign key), id_product(foreign key), quantity]
 
 
 
