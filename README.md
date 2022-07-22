@@ -30,11 +30,11 @@ ENV = dev
 ## Routes
 ### User Routes
 - post /create   :creates a user, takes in a json without id, and returns Token and the generated serial id.
--- ex: {   
-        "first_name" : "hi",
-        "last_name" : "feraly",
-        "password" : "123456"
-       }
+        - ex: {   
+                "first_name" : "hi",
+                "last_name" : "feraly",
+                "password" : "123456"
+               }
 - post /login    :takes in all the info of the user including the serial id, and returns a jwt token. (if info invalid, then unauthorized)
 - get /index     :shows all users, takes a bearer jwt token
 - get /show/:id  :show user of this id, takes a bearer jwt token
