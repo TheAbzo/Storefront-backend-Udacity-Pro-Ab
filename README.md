@@ -5,8 +5,8 @@
 - clone this repo and run `npm install` in your terminal at the project root.
 - make sure that postgres is running on port 5432 (backend runs on port 3002)
 - run these 2 commands in the psql 
--- `CREATE DATABASE store_front;`
--- `CREATE DATABASE store_front_test;`
+        - `CREATE DATABASE store_front;`
+        - `CREATE DATABASE store_front_test;`
 
 ## env file
 your env file must have something like this:
