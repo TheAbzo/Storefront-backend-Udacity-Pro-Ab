@@ -3,8 +3,13 @@ import bodyParser from 'body-parser';
 import users_routes from './handlers/users_handler';
 import products_routes from './handlers/products_handlers';
 import order_routes from './handlers/orders_handlers';
+import cors from 'cors';
 
 const app: express.Application = express();
+
+app.use(cors({
+    origin: '*'
+}));
 
 app.use(bodyParser.json());
 

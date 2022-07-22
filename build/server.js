@@ -8,7 +8,11 @@ const body_parser_1 = __importDefault(require("body-parser"));
 const users_handler_1 = __importDefault(require("./handlers/users_handler"));
 const products_handlers_1 = __importDefault(require("./handlers/products_handlers"));
 const orders_handlers_1 = __importDefault(require("./handlers/orders_handlers"));
+const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
+app.use((0, cors_1.default)({
+    origin: '*'
+}));
 app.use(body_parser_1.default.json());
 app.get('/', function (req, res) {
     res.send('Hello World!');
