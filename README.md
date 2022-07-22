@@ -1,19 +1,54 @@
 # Storefront Backend Project
 
-## Getting Started
+## Installation
 
-This repo contains a basic Node and Express app to get you started in constructing an API. To get started, clone this repo and run `yarn` in your terminal at the project root.
+- clone this repo and run `npm install` in your terminal at the project root.
+- make sure that postgres is running on port 5432 (backend runs on port 3002)
+- run these 2 commands in the psql 
+-- `CREATE DATABASE store_front;`
+-- `CREATE DATABASE store_front_test;`
 
-## Required Technologies
-Your application must make use of the following libraries:
-- Postgres for the database
-- Node/Express for the application logic
-- dotenv from npm for managing environment variables
-- db-migrate from npm for migrations
-- jsonwebtoken from npm for working with JWTs
-- jasmine from npm for testing
+## env file
+your env file must have something like this:
+POSTGRES_HOST = localhost
+POSTGRES_DB = store_front
+POSTGRES_USER = postgres
+POSTGRES_TEST_DB = store_front_test
+POSTGRES_PASSWORD = <YOUR PASSWORD HERE>
+POSTGRES_PORT = 5432
+BCRYPT_PASSWORD = speak-friend-Abzo
+SALT_ROUNDS = 10
+TOKEN_SECRET = secret
+ENV = dev
 
-## Steps to Completion
+## scripts
+- dev : it migrates up all the tables and runs the server
+- test: it runs all the tests
+- format: uses prettier to format
+- lint: uses eslint
+
+## Routes
+### User Routes
+- post /create   :creates a user, takes in a json without id, and returns Token and the generated serial id.
+-- ex: {   
+        "first_name" : "hi",
+        "last_name" : "feraly",
+        "password" : "123456"
+       }
+- post /login    :takes in all the info of the user including the serial id, and returns a jwt token. (if info invalid, then unauthorized)
+- get /index     :shows all users, takes a bearer jwt token
+- get /show/:id  :show user of this id, takes a bearer jwt token
+
+
+### Products Routes
+- post /products_create :creates new product, needs a bearer jwt token
+- get /products_index :shows all products
+- get /products_show/:id :shows the specific id 
+
+### Order Routes
+
+
+## Routes
 
 ### 1. Plan to Meet Requirements
 
@@ -29,26 +64,7 @@ Table: Books (id:varchar, title:varchar, author:varchar, published_year:varchar,
 
 **NOTE** It is important to remember that there might not be a one to one ratio between data shapes and database tables. Data shapes only outline the structure of objects being passed between frontend and API, the database may need multiple tables to store a single shape. 
 
-### 2.  DB Creation and Migrations
 
-Now that you have the structure of the databse outlined, it is time to create the database and migrations. Add the npm packages dotenv and db-migrate that we used in the course and setup your Postgres database. If you get stuck, you can always revisit the database lesson for a reminder. 
 
-You must also ensure that any sensitive information is hashed with bcrypt. If any passwords are found in plain text in your application it will not pass.
 
-### 3. Models
 
-Create the models for each database table. The methods in each model should map to the endpoints in `REQUIREMENTS.md`. Remember that these models should all have test suites and mocks.
-
-### 4. Express Handlers
-
-Set up the Express handlers to route incoming requests to the correct model method. Make sure that the endpoints you create match up with the enpoints listed in `REQUIREMENTS.md`. Endpoints must have tests and be CORS enabled. 
-
-### 5. JWTs
-
-Add JWT functionality as shown in the course. Make sure that JWTs are required for the routes listed in `REQUIUREMENTS.md`.
-
-### 6. QA and `README.md`
-
-Before submitting, make sure that your project is complete with a `README.md`. Your `README.md` must include instructions for setting up and running your project including how you setup, run, and connect to your database. 
-
-Before submitting your project, spin it up and test each endpoint. If each one responds with data that matches the data shapes from the `REQUIREMENTS.md`, it is ready for submission!
