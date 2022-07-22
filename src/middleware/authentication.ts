@@ -1,12 +1,10 @@
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import { Request, Response, NextFunction } from "express";
 
 
-const verifyAuthToken = (req: Request, res: Response, next: NextFunction) => {
+export const verifyAuthToken = (req: Request, res: Response, next: NextFunction) => {
     try {
-        console.log("here in auth token")
         const authorizationHeader = req.headers.authorization
-        console.log("authhhhh is", authorizationHeader)
         if(authorizationHeader){
             const token = authorizationHeader.split(' ')[1] 
             const decoded = jwt.verify(token, process.env.TOKEN_SECRET as string)
@@ -24,4 +22,26 @@ const verifyAuthToken = (req: Request, res: Response, next: NextFunction) => {
     }
 }
 
-export default verifyAuthToken;
+//check user id
+export const authorizationToken = (req: Request, res: Response, next: NextFunction) => {
+    
+    const userId = parseInt(req.params.id)
+    try {
+        const authorizationHeader = req.headers.authorization
+        if(authorizationHeader){
+            const token = authorizationHeader.split(' ')[1] 
+            const verified:JwtPayload = jwt.verify(token, process.env.TOKEN_SECRET as string) as JwtPayload
+            if(verified.id as number === userId) {
+                next();
+            }else {
+                throw 'exception';
+            }
+        }
+        else{
+            throw 'exception';
+        }
+    } catch (error) {
+        res.status(401).send("Error 401: Unauthorized")
+    }
+}
+

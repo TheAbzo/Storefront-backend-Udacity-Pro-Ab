@@ -53,7 +53,7 @@ export class Users {
         const conn = await client.connect()
         const result = await conn.query(sql)
         conn.release()
-        console.log("in show", result.rows[0])
+        // console.log("in show", result.rows[0])
         return result.rows[0]
         } catch (err) {
             throw new Error(`Could not find user ${id}. Error: ${err}`)
@@ -78,7 +78,7 @@ export class Users {
         const sql = `select * from users where id = $1`
 
         const result = await conn.query(sql, [id])
-        console.log(password + pepper)
+        // console.log(password + pepper)
 
         //if id(user) exists
         if(result.rows.length){
@@ -86,7 +86,7 @@ export class Users {
 
             //compare passwords
             if(bcrypt.compareSync(password+pepper, user.password)){
-                console.log("ssss")
+                // console.log("ssss")
                 
                 //im selecting id only
                 return result.rows[0]

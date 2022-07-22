@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express'
 import bodyParser from 'body-parser'
 import users_routes from './handlers/users_handler'
 import products_routes from './handlers/products_handlers'
+import order_routes from './handlers/orders_handlers'
 
 const app: express.Application = express()
 const address: string = "0.0.0.0:3002"
@@ -16,10 +17,10 @@ app.listen(3002, function () {
     console.log(`starting app on: ${address}`)
 })
 
-//see if u want a middleware for authentication/authorization token
 //routes
 users_routes(app)
 products_routes(app)
+order_routes(app)
 
 
 export default app;

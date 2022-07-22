@@ -17,7 +17,7 @@ describe('suite for testing user handlers endpoints', (): void => {
             id = response.body.id;
             token = response.body.token;
         }
-        console.log("id is ",id, "token is ", token)
+        // console.log("id is ",id, "token is ", token)
         expect(response.status).toBe(200);
     });
 

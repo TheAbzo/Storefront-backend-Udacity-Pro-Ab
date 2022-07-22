@@ -2,7 +2,7 @@ import express, {Request,Response} from 'express'
 import { Users, User } from '../models/users'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv';
-import verifyAuthToken from '../middleware/authentication';
+import {verifyAuthToken} from '../middleware/authentication';
 
 const store =  new Users();
 dotenv.config()
@@ -12,6 +12,7 @@ const {
    } = process.env
 
 
+console.log("in users handlers")
 //return token on creating new user with his id in database
 const create = async (req:Request, res:Response) =>{
     console.log("entered create")
@@ -78,7 +79,7 @@ const authenticate = async (req: Request, res: Response) => {
   }
 
 
-//all my routes
+//my user routes
 const users_routes = (app:express.Application) => {
     app.post('/create', create)
     app.get('/index', verifyAuthToken,index)

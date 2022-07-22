@@ -23,7 +23,7 @@ describe('suite for testing product handlers endpoints', (): void => {
             token = response.body.token;
         }
 
-        console.log(token)
+        // console.log(token)
         const responseProduct = await request.post('/products_create').set({"authorization": `Bearer ${token}`}).send(product);
         expect(responseProduct.status).toBe(200);
     });
