@@ -13,7 +13,7 @@ const users_1 = require("../models/users");
 const user = new users_1.Users();
 const userTest = {
     "id": 1,
-    "first_name": "Abzo",
+    "first_name": "bassant",
     "last_name": "The Abzo",
     "password": "123"
 };

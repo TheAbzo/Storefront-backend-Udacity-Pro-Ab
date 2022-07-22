@@ -15,11 +15,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const users_1 = require("../models/users");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const dotenv_1 = __importDefault(require("dotenv"));
-const authentication_1 = __importDefault(require("../middleware/authentication"));
+const authentication_1 = require("../middleware/authentication");
 const store = new users_1.Users();
 dotenv_1.default.config();
 //create env file next
 const { TOKEN_SECRET } = process.env;
+console.log("in users handlers");
 //return token on creating new user with his id in database
 const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log("entered create");
@@ -85,11 +86,11 @@ const authenticate = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         // res.json({ error })
     }
 });
-//all my routes
+//my user routes
 const users_routes = (app) => {
     app.post('/create', create);
-    app.get('/index', authentication_1.default, index);
-    app.get('/show/:id', authentication_1.default, show);
+    app.get('/index', authentication_1.verifyAuthToken, index);
+    app.get('/show/:id', authentication_1.verifyAuthToken, show);
     app.post('/login', authenticate);
 };
 exports.default = users_routes;

@@ -8,12 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const products_1 = require("../models/products");
-const authentication_1 = __importDefault(require("../middleware/authentication"));
+const authentication_1 = require("../middleware/authentication");
 const store = new products_1.Products();
 console.log("in products handlers");
 //needs user token
@@ -64,7 +61,7 @@ const show = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 //my product routes
 const products_routes = (app) => {
-    app.post('/products_create', authentication_1.default, create);
+    app.post('/products_create', authentication_1.verifyAuthToken, create);
     app.get('/products_index', index);
     app.get('/products_show/:id', show);
 };

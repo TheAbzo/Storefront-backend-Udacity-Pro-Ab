@@ -34,7 +34,7 @@ describe('suite for testing product handlers endpoints', () => {
             id = response.body.id;
             token = response.body.token;
         }
-        console.log(token);
+        // console.log(token)
         const responseProduct = yield request.post('/products_create').set({ "authorization": `Bearer ${token}` }).send(product);
         expect(responseProduct.status).toBe(200);
     }));

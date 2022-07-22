@@ -29,7 +29,7 @@ describe('suite for testing user handlers endpoints', () => {
             id = response.body.id;
             token = response.body.token;
         }
-        console.log("id is ", id, "token is ", token);
+        // console.log("id is ",id, "token is ", token)
         expect(response.status).toBe(200);
     }));
     it('/index user endpoint works well', () => __awaiter(void 0, void 0, void 0, function* () {

@@ -58,7 +58,7 @@ class Users {
                 const conn = yield database_1.default.connect();
                 const result = yield conn.query(sql);
                 conn.release();
-                console.log("in show", result.rows[0]);
+                // console.log("in show", result.rows[0])
                 return result.rows[0];
             }
             catch (err) {
@@ -86,13 +86,13 @@ class Users {
             const conn = yield database_1.default.connect();
             const sql = `select * from users where id = $1`;
             const result = yield conn.query(sql, [id]);
-            console.log(password + pepper);
+            // console.log(password + pepper)
             //if id(user) exists
             if (result.rows.length) {
                 const user = result.rows[0];
                 //compare passwords
                 if (bcrypt_1.default.compareSync(password + pepper, user.password)) {
-                    console.log("ssss");
+                    // console.log("ssss")
                     //im selecting id only
                     return result.rows[0];
                 }

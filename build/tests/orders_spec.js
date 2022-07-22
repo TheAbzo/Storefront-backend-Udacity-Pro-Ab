@@ -55,18 +55,14 @@ describe("Orders Model", () => {
     }));
     it('Orders: Index method test', () => __awaiter(void 0, void 0, void 0, function* () {
         const result = yield order.index();
-        console.log("result in order", result);
         expect(result).toBeInstanceOf(Array);
     }));
     it('Orders: Show method test', () => __awaiter(void 0, void 0, void 0, function* () {
-        console.log("user id", useId);
         const result = yield order.show(useId);
-        console.log("orders result in show", result);
         expect(result).toBeInstanceOf(Object);
     }));
     it('Orders: Delete method test', () => __awaiter(void 0, void 0, void 0, function* () {
-        console.log("deleting order id of ", orderId);
-        const result = yield order.delete(14);
+        const result = yield order.delete(orderId);
         expect(result).toBe(true);
     }));
 });
