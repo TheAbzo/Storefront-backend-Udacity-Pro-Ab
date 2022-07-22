@@ -63,20 +63,20 @@ your env file must have something like this:
 
 ## Schema
      
-1. [Table]users:
-- [Data: id(serial), first_name, last_name, password]
+1. [Table] users:
+    - [Data: id(serial), first_name, last_name, password]
         
         
-2. [Table]products: 
-- [Data: id(serial), name, price, category]
+2. [Table] products: 
+    - [Data: id(serial), name, price, category]
         
         
-3. [Table]orders: 
-- [Data: id(serial), user_id, status]
+3. [Table] orders: 
+        - [Data: id(serial), user_id, status]
         
         
-4. [Table]products_orders: 
-- [Data: id_order(foreign key), id_product(foreign key), quantity]
+4. [Table] products_orders: 
+        - [Data: id_order(foreign key), id_product(foreign key), quantity]
 
 
 
