@@ -22,21 +22,20 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 ## Data Shapes
 #### Product
--  id
-- name
-- price
-- [OPTIONAL] category
+![](schema/products.png)
 
+- id is primary serial key
 #### User
-- id
-- firstName
-- lastName
-- password
+![](schema/users.png)
 
+- id is primary serial key
 #### Orders
-- id
-- id of each product in the order
-- quantity of each product in the order
-- user_id
-- status of order (active or complete)
+![](schema/orders.png)
+
+- id is primary serial key
+#### Products_orders
+![](schema/products_orders.png)
+
+- it has 2 foreign keys on orders and products tables.
+
 
