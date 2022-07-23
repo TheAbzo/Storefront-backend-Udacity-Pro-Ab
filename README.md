@@ -58,7 +58,7 @@ your env file must have something like this:
             - shows the specific id 
 
 ### Order Routes
-- [POST] /orders/:id            
+- [GET] /orders/:id            
             - show current Order by user (args: user id)[bearer token required]
 
 ## Schema
