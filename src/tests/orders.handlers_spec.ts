@@ -39,7 +39,7 @@ describe('Orders Handlers', () => {
         const result2 = await user.create(userTest);
         const token = jwt.sign(result2[0], process.env.TOKEN_SECRET as jwt.Secret);
         const response = await request
-            .post(`/orders/${result2[0].id}`)
+            .get(`/orders/${result2[0].id}`)
             .set({ authorization: `Bearer ${token}` });
         expect(response.status).toBe(200);
     });

@@ -17,7 +17,7 @@ const show = async (req: Request, res: Response) => {
 
 //my product routes
 const order_routes = (app: express.Application) => {
-    app.post('/orders/:id', authorizationToken, show);
+    app.get('/orders/:id', authorizationToken, show);
 };
 
 export default order_routes;
