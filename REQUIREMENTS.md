@@ -5,20 +5,39 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 ## API Endpoints
 #### Products
-- Index 
-- Show
-- Create [token required]
-- [OPTIONAL] Top 5 most popular products 
-- [OPTIONAL] Products by category (args: product category)
+- [POST] /products_create       
+            - creates new product [bearer token required]
+                - ex: `{   
+                         "name" : "xiaomi",
+                         "price" : 50,
+                         "category" : "phones"
+                         }`
+- [GET] /products_index          
+            - shows all products
+- [GET] /products_show/:id       
+            - shows the specific id 
+
+
 
 #### Users
-- Index [token required]
-- Show [token required]
-- Create N[token required]
+- [POST] /create        
+            - creates a user, takes in a json without id, and returns Token and the generated serial id.
+                - ex: `{   
+                        "first_name" : "hi",
+                        "last_name" : "feraly",
+                        "password" : "123456"
+                           }`
+- [POST] /login         
+            - takes in all the info of the user including the serial id, and returns a jwt token. (if info invalid, then unauthorized)
+- [GET] /index          
+            - shows all users [bearer token required]
+- [GET] /show/:id       
+            - show user of this id [bearer token required]
 
 #### Orders
-- Current Order by user (args: user id)[token required]
-- [OPTIONAL] Completed Orders by user (args: user id)[token required]
+- [POST] /orders/:id            
+            - show current Order by user (args: user id)[bearer token required]
+
 
 ## Data Shapes
 #### Product
