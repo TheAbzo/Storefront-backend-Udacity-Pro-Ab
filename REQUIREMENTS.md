@@ -35,7 +35,7 @@ These are the notes from a meeting with the frontend developer that describe wha
             - show user of this id [bearer token required]
 
 #### Orders
-- [POST] /orders/:id            
+- [GET] /orders/:id            
             - show current Order by user (args: user id)[bearer token required]
 
 
